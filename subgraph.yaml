@@ -1,0 +1,77 @@
+specVersion: 0.0.2
+description: Klima Sushi price feeds
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: BCT_USDC
+    network: matic
+    source:
+      address: '0x1e67124681b402064cd0abe8ed1b5c79d2e02f64'
+      abi: Pair
+      startBlock: 20358242
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/Pair.ts
+      entities:
+        - Pair
+        - Trade
+        - Token
+      abis:
+        - name: Pair
+          file: ./abis/pair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap
+  - kind: ethereum/contract
+    name: KLIMA_USDC
+    network: matic
+    source:
+      address: '0x5786b267d35f9d011c4750e0b0ba584e1fdbead1'
+      abi: Pair
+      startBlock: 20378562
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/Pair.ts
+      entities:
+        - Pair
+        - Trade
+        - Token
+      abis:
+        - name: Pair
+          file: ./abis/pair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap
+  - kind: ethereum/contract
+    name: KLIMA_BCT
+    network: matic
+    source:
+      address: '0x9803c7ae526049210a1725f7487af26fe2c24614'
+      abi: Pair
+      startBlock: 20359947
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/Pair.ts
+      entities:
+        - Pair
+        - Trade
+        - Token
+      abis:
+        - name: Pair
+          file: ./abis/pair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap

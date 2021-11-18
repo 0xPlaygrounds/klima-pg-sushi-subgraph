@@ -1,0 +1,27 @@
+{
+  "name": "klima-pg-sushi-subgraph",
+  "version": "1.0.0",
+  "repository": "https://github.com/cvauclair/",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graph codegen --output-dir src/types/",
+    "create-local": "graph create cvauclair/klima-pg-sushi-subgraph --node http://127.0.0.1:8020",
+    "build": "graph build",
+    "test": "graph test",
+    "deploy-local": "graph deploy cvauclair/klima-pg-sushi-subgraph --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy": "graph deploy cvauclair/klima-pg-sushi-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug",
+    "deploy-staging": "graph deploy cvauclair/klima-pg-sushi-subgraph --ipfs https://api.staging.thegraph.com/ipfs/ --node https://api.staging.thegraph.com/deploy/",
+    "watch-local": "graph deploy cvauclair/klima-pg-sushi-subgraph --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.22.0",
+    "@graphprotocol/graph-ts": "^0.22.0",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {}
+}
