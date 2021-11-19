@@ -148,7 +148,7 @@ export class Trade extends Entity {
     this.set("high", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("low", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("close", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("volume", Value.fromBigInt(BigInt.zero()));
+    this.set("volume", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("pair", Value.fromString(""));
   }
@@ -215,13 +215,13 @@ export class Trade extends Entity {
     this.set("close", Value.fromBigDecimal(value));
   }
 
-  get volume(): BigInt {
+  get volume(): BigDecimal {
     let value = this.get("volume");
-    return value!.toBigInt();
+    return value!.toBigDecimal();
   }
 
-  set volume(value: BigInt) {
-    this.set("volume", Value.fromBigInt(value));
+  set volume(value: BigDecimal) {
+    this.set("volume", Value.fromBigDecimal(value));
   }
 
   get timestamp(): BigInt {

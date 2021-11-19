@@ -21,7 +21,7 @@ type Trade @entity {
   low: BigDecimal!
   close: BigDecimal!
   
-  volume: BigInt!
+  volume: BigDecimal!
 
   timestamp: BigInt!
   pair: Pair!

@@ -54,16 +54,16 @@ export function handleSwap(event: Swap): void {
   let hour_timestamp = BigInt.fromI32(3600) * (event.block.timestamp / BigInt.fromI32(3600)) as BigInt
   
   let price = BigDecimalZero
-  let volume = BigIntZero
+  let volume = BigDecimalZero
   let token0_decimals = (Token.load(pair.token0) as Token).decimals
   let token1_decimals = (Token.load(pair.token1) as Token).decimals
 
   if (event.params.amount0In == BigIntZero) {
     price = toUnits(event.params.amount0Out, token0_decimals) / toUnits(event.params.amount1In, token1_decimals)
-    volume = event.params.amount0Out
+    volume = toUnits(event.params.amount0Out, token0_decimals)
   } else {
     price = toUnits(event.params.amount0In, token0_decimals) / toUnits(event.params.amount1Out, token1_decimals)
-    volume = event.params.amount0In
+    volume = toUnits(event.params.amount0In, token0_decimals)
   }
 
   let trade = Trade.load(event.address.toHexString() + "-" + hour_timestamp.toString())
