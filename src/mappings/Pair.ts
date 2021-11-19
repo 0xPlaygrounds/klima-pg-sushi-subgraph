@@ -1,4 +1,4 @@
-import { BigInt, BigDecimal } from '@graphprotocol/graph-ts'
+import { BigInt, BigDecimal, log } from '@graphprotocol/graph-ts'
 import { Pair, Token, Trade } from '../types/schema'
 
 import {
@@ -42,6 +42,11 @@ export function getCreatePair(address: Address): Pair {
   return pair as Pair
 }
 
+function toUnits(x: BigInt, decimals: number): BigDecimal {
+  let denom = BigInt.fromI32(10).pow(decimals as u8).toBigDecimal()
+  return x.toBigDecimal().div(denom)
+}
+
 // BCT_USDC
 export function handleSwap(event: Swap): void {
   let pair = getCreatePair(event.address)
@@ -50,11 +55,14 @@ export function handleSwap(event: Swap): void {
   
   let price = BigDecimalZero
   let volume = BigIntZero
+  let token0_decimals = (Token.load(pair.token0) as Token).decimals
+  let token1_decimals = (Token.load(pair.token1) as Token).decimals
+
   if (event.params.amount0In == BigIntZero) {
-    price = event.params.amount0Out.toBigDecimal() / event.params.amount1In.toBigDecimal()
+    price = toUnits(event.params.amount0Out, token0_decimals) / toUnits(event.params.amount1In, token1_decimals)
     volume = event.params.amount0Out
   } else {
-    price = event.params.amount0In.toBigDecimal() / event.params.amount1Out.toBigDecimal()
+    price = toUnits(event.params.amount0In, token0_decimals) / toUnits(event.params.amount1Out, token1_decimals)
     volume = event.params.amount0In
   }
 
